@@ -1,0 +1,29 @@
+[project]
+name = "pybama-org"
+version = "0.1.0"
+description = "Python user group for Alabama"
+authors = [
+    { name = "Jacob Coffee", email = "jacob@python.org" }
+]
+dependencies = [
+    "litestar[structlog,jinja]>=2.9.1",
+    "litestar-granian>=0.5.0",
+    "litestar-vite>=0.1.22",
+    "advanced-alchemy>=0.17.3",
+]
+readme = "README.md"
+requires-python = ">= 3.12"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pybama_org"]
