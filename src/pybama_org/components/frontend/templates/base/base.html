@@ -1,0 +1,25 @@
+<!doctype html>
+<html data-theme="dark" class="h-full" lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    <link rel="icon" href="{{ BASE_PATH }}/static/badge.png" type="image/x-icon" />
+    <title>PyBama | {% block title %}{% endblock %}</title>
+    {% block extrahead %}{% endblock %} {% block extrastyle %}{% endblock %}
+  </head>
+
+  <body class="flex h-full min-h-screen font-mono leading-none antialiased bg-base-100">
+    <div class="lg:pl-72">
+      <main>
+        <div>{% block content %}{% endblock content %}</div>
+      </main>
+    </div>
+    {{ vite_hmr() }} {{ vite('resources/main.ts') }} {{ vite('resources/listeners.js') }}
+  </body>
+
+  <script>
+    {% block extrajs %}{% endblock extrajs %}
+  </script>
+</html>

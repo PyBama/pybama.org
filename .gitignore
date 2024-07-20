@@ -4,3 +4,9 @@
 # project things
 .venv
 .ruff_cache
+
+# frontend things
+src/pybama_org/components/frontend/public
+src/pybama_org/components/frontend/hot
+src/pybama_org/components/frontend/static
+.vite
