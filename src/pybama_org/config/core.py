@@ -9,13 +9,15 @@ from litestar.config.csrf import CSRFConfig
 from litestar.logging.config import LoggingConfig, StructLoggingConfig
 from litestar.middleware.logging import LoggingMiddlewareConfig
 from litestar.openapi.config import OpenAPIConfig
-from litestar.openapi.plugins import ScalarRenderPlugin
+from litestar.openapi.plugins import ScalarRenderPlugin, SwaggerRenderPlugin
+from litestar.openapi.spec import Contact
 from litestar.plugins.structlog import StructlogConfig, StructlogPlugin
+from litestar.template.config import TemplateConfig
 from litestar_granian import GranianPlugin
 from litestar_vite import ViteConfig, VitePlugin
 
-from pybama_org.__metadata__ import __version__
 from pybama_org.config.settings import get_settings
+from pybama_org.utils import set_base_path
 
 settings = get_settings()
 
@@ -27,6 +29,12 @@ csrf_config = CSRFConfig(
     cookie_name=settings.app.CSRF_COOKIE_NAME,
 )
 cors_config = CORSConfig(allow_origins=cast("list[str]", settings.app.ALLOWED_CORS_ORIGINS))
+template = TemplateConfig(
+    directory=settings.vite.TEMPLATE_DIR,
+    engine=settings.vite.TEMPLATE_ENGINE,
+    engine_callback=set_base_path,
+)
+"""Template config. See :class:`TemplateSettings <.settings.TemplateSettings>` for configuration."""
 vite_config = ViteConfig(
     bundle_dir=settings.vite.BUNDLE_DIR,
     resource_dir=settings.vite.RESOURCE_DIR,
@@ -63,11 +71,18 @@ log_config = StructlogConfig(
     ),
 )
 openapi_config = OpenAPIConfig(
-    title=settings.app.NAME,
-    version=__version__,
-    path="/api",
+    title=settings.openapi.TITLE or settings.app.NAME,
+    version=settings.openapi.VERSION,
+    contact=Contact(name=settings.openapi.CONTACT_NAME, email=settings.openapi.CONTACT_EMAIL),
     use_handler_docstrings=True,
-    render_plugins=[ScalarRenderPlugin()],
+    path=settings.openapi.PATH,
+    servers=settings.openapi.SERVERS,  # type: ignore[arg-type]
+    external_docs=settings.openapi.EXTERNAL_DOCS,  # type: ignore[arg-type]
+    create_examples=True,
+    render_plugins=[
+        ScalarRenderPlugin(version="1.20.7", path="/scalar", css_url="/static/scalar_api.css"),
+        SwaggerRenderPlugin(),
+    ],
 )
 
 # --- Plugin instances

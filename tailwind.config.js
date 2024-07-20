@@ -1,14 +1,8 @@
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require("tailwindcss/defaultTheme")
-
 module.exports = {
-  darkMode: "class",
-  content: [
-    "{resources,templates}/**/*.{js,cjs,mjs,jsx,ts,tsx,vue,j2,html,htm,jinja,jinja2}",
-    "src/pybama_org/frontend/templates/**/*.{js,jsx,ts,cjs,mjs,tsx,vue,j2,html,htm,jinja,jinja2}",
-  ],
-  safelist: ["alert", "alert-success", "alert-error", "alert-warning", "alert-info"],
-  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/aspect-ratio"), require("daisyui")],
+  darkMode: ["class"],
+  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  prefix: "",
   theme: {
     container: {
       center: true,
@@ -19,42 +13,60 @@ module.exports = {
     },
     extend: {
       colors: {
-        "python-primary": "#4584b6",
-        "python-accent": "#ffde57",
-        "python-secondary": "#646464",
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
-  daisyui: {
-    darkTheme: "dark",
-    base: true,
-    styled: true,
-    utils: true,
-    themes: [
-      {
-        light: {
-          primary: "#4584b6",
-          secondary: "#646464",
-          accent: "#70b2e7",
-          neutral: "#e5e7eb",
-          "base-100": "#f3f4f6",
-          info: "#7dd3fc",
-          success: "#86efac",
-          warning: "#fcd34d",
-          error: "#f87171",
-        },
-        dark: {
-          primary: "#4584b6",
-          secondary: "#ebebe9",
-          accent: "#70b2e7",
-          neutral: "#202020",
-          "base-100": "#121212",
-          info: "#7dd3fc",
-          success: "#86efac",
-          warning: "#fcd34d",
-          error: "#f87171",
-        },
-      },
-    ],
-  },
+  plugins: [require("tailwindcss-animate")],
 }

@@ -1,5 +1,6 @@
 import { defineConfig } from "vite"
 import path from "path"
+import react from "@vitejs/plugin-react"
 import litestar from "litestar-vite-plugin"
 
 const ASSET_URL = process.env.ASSET_URL || "/static/"
@@ -18,6 +19,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    react(),
     litestar({
       input: ["resources/styles.css", "resources/main.ts"],
       assetUrl: `${ASSET_URL}`,
