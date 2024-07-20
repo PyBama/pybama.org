@@ -16,7 +16,7 @@ from litestar.utils.module_loader import module_to_os_path
 if TYPE_CHECKING:
     from litestar.data_extractors import RequestExtractorField, ResponseExtractorField
 
-DEFAULT_MODULE_NAME = "app"
+DEFAULT_MODULE_NAME = "pybama_org"
 BASE_DIR: Final[Path] = module_to_os_path(DEFAULT_MODULE_NAME)
 
 TRUE_VALUES = {"True", "true", "1", "yes", "Y", "T"}
@@ -76,7 +76,7 @@ class ViteSettings:
 class ServerSettings:
     """Server configurations."""
 
-    APP_LOC: str = "app.asgi:app"
+    APP_LOC: str = "pybama_org.app:app"
     """Path to app executable, or factory."""
     APP_LOC_IS_FACTORY: bool = False
     """Indicate if APP_LOC points to an executable or factory."""

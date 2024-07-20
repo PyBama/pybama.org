@@ -65,10 +65,10 @@ log_config = StructlogConfig(
 openapi_config = OpenAPIConfig(
     title=settings.app.NAME,
     version=__version__,
+    path="/api",
     use_handler_docstrings=True,
     render_plugins=[ScalarRenderPlugin()],
 )
-"""OpenAPI config for app. See OpenAPISettings for configuration."""
 
 # --- Plugin instances
 structlog_plugin = StructlogPlugin(config=log_config)
