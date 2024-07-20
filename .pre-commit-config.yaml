@@ -1,0 +1,74 @@
+default_language_version:
+  python: "3.12"
+default_install_hook_types: [commit-msg, pre-commit]
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks.git
+    rev: v4.5.0
+    hooks:
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-yaml
+        args: [--unsafe]
+      - id: check-merge-conflict
+      - id: destroyed-symlinks
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: fix-encoding-pragma
+        args: [--remove]
+      - id: sort-simple-yaml
+      - id: trailing-whitespace
+      - id: check-added-large-files
+      - id: check-ast
+      - id: trailing-whitespace
+  - repo: https://github.com/python-formate/flake8-dunder-all
+    rev: v0.3.1
+    hooks:
+      - id: ensure-dunder-all
+        exclude: "test*|tools"
+        args: ["--use-tuple"]
+  - repo: https://github.com/astral-sh/ruff-pre-commit.git
+    rev: v0.3.4
+    hooks:
+      - id: ruff
+        args: ["--fix", "--unsafe-fixes"]
+      - id: ruff-format
+  - repo: https://github.com/codespell-project/codespell.git
+    rev: v2.2.6
+    hooks:
+      - id: codespell
+        additional_dependencies:
+          - tomli
+  - repo: https://github.com/compilerla/conventional-pre-commit.git
+    rev: v3.1.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        exclude: ".git"
+  - repo: https://github.com/thibaudcolas/curlylint
+    rev: v0.13.1
+    hooks:
+      - id: curlylint
+        args: ["--format", "stylish"]
+  - repo: https://github.com/pre-commit/mirrors-mypy.git
+    rev: "v1.9.0"
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          [
+            rich-click,
+            pytest,
+            uvloop,
+            "litestar[structlog,jinja] @ https://github.com/litestar-org/litestar/archive/refs/heads/main.zip",
+            litestar-granian,
+            litestar-vite,
+            types-click,
+            types-toml,
+          ]
+  - repo: https://github.com/sphinx-contrib/sphinx-lint
+    rev: "v0.9.1"
+    hooks:
+      - id: sphinx-lint

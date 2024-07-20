@@ -5,25 +5,239 @@ description = "Python user group for Alabama"
 authors = [
     { name = "Jacob Coffee", email = "jacob@python.org" }
 ]
+license = "MIT"
 dependencies = [
     "litestar[structlog,jinja]>=2.9.1",
     "litestar-granian>=0.5.0",
     "litestar-vite>=0.1.22",
     "advanced-alchemy>=0.17.3",
+    "python-dotenv>=1.0.1",
 ]
 readme = "README.md"
 requires-python = ">= 3.12"
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+[project.scripts]
+app = "pybama_org.__main__:run_cli"
 
-[tool.rye]
-managed = true
-dev-dependencies = []
+[project.urls]
+homepage = "https://www.pybama.org/"
+documentation = "https://pybama.org/docs/"
+Source = "https://github.com/PyBama/pybama.org"
+repository = "https://github.com/PyBama/pybama.org"
+
+[build-system]
+requires = ["hatchling", "nodeenv"]
+build-backend = "hatchling.build"
 
 [tool.hatch.metadata]
 allow-direct-references = true
 
-[tool.hatch.build.targets.wheel]
+[tool.hatch.build]
+dev-mode-dirs = ["src/"]
+include = ["src/public/**/*"]
 packages = ["src/pybama_org"]
+
+[tool.ruff]
+line-length = 120
+src = ["pybama_org", "tests"]
+target-version = "py311"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "pytest>=8.3.1",
+    "pytest-sugar>=1.0.0",
+    "sphinx>=7.4.7",
+    "sphinx-autobuild>=2024.4.16",
+    "sphinx-copybutton>=0.5.2",
+    "sphinx-toolbox>=3.7.0",
+    "sphinx-design>=0.6.0",
+    "sphinx-click>=6.0.0",
+    "blacken-docs>=1.18.0",
+    "shibuya>=2024.7.13",
+    "sphinxcontrib-openapi>=0.8.4",
+    "pytailwindcss>=0.2.0",
+    "codespell>=2.3.0",
+    "mypy>=1.11.0",
+    "pre-commit>=3.7.1",
+]
+
+[tool.codespell]
+count = ""
+quiet-level = 3
+ignore-words-list = "alog"
+skip = "*.min.js"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["ANN101", "ANN102", "ANN401", "PLR0913", "RUF012", "COM812", "ISC001", "ERA001", "TD", "FIX002"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 12
+
+[tool.ruff.lint.pep8-naming]
+classmethod-decorators = [
+    "classmethod",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["pybama_org", "tests", "config"]
+
+[tool.ruff.lint.per-file-ignores]
+# Tests can use magic values, assertions, and relative imports
+#"**/*.*" = [
+#    "ANN101",
+#    "ANN401",
+#    "ANN102",
+#    "TD",
+#    "FIX002",
+#    "RUF012", # ClassVar Annotations - # TODO: Investigate/Fix
+#    "FBT001", # Boolean typed positional argument in function definition
+#    "FBT002", # Boolean default positional argument in function definition
+#    "FBT003", # Boolean Boolean default positional argument in function definition
+#    "B008", # Do not perform function calls in argument defaults
+#]
+"src/**/*.*" = ["PLR0913", "SLF001"]
+"src/server/lib/db/base.py" = ["E501"]
+"src/server/lib/db/migrations/versions/*.*" = ["D", "INP", "PGH"]
+"tests/**/*.*" = [
+    "S101",
+    "D",
+    "ARG",
+    "PGH",
+    "B",
+    "FBT",
+    "PTH",
+    "A",
+    "TCH",
+    "DTZ",
+    "TRY",
+    "EM",
+    "S",
+    "N",
+    "SIM",
+    "PLR",
+    "BLE",
+    "RSE",
+    "C901",
+    "PLW",
+    "G",
+    "PIE",
+    "RUF012",
+    "FA",
+    "ANN",
+    "SLF",
+    "PT",
+    "INP",
+    "TD",
+    "FIX",
+    "FBT",
+    "PLR0913", # too many arguments
+    "PT",
+    "PLR2004",
+    "TID252",
+    "T",
+]
+"docs/**/*.*" = [
+    "S",
+    "B",
+    "DTZ",
+    "A",
+    "TCH",
+    "ERA",
+    "D",
+    "RET",
+    "E731",
+    "RUF012",
+    "FA100",
+    "ARG001",
+]
+"docs/conf.py" = ["FIX002", "ARG001", "INP001"]
+"tools/**/*.*" = ["D", "ARG", "EM", "TRY", "G", "FBT", "INP"]
+
+[tool.git-cliff.changelog]
+header = """
+=========
+Changelog
+=========\n
+All commits to this project will be documented in this file.\n
+"""
+body = """
+{% if version %}\
+    `Release [v{{ version | trim_start_matches(pat="v") }}] - {{ timestamp | date(format="%Y-%m-%d") }} <https://github.com/PyBama/pybama.org/releases/tag/v{{ version | trim_start_matches(pat="v") }}>`_
+    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    * `See All commits in v{{ version | trim_start_matches(pat="v") }} <https://github.com/PyBama/pybama.org/commits/v{{ version | trim_start_matches(pat="v") }}>`_
+{% else %}\
+    [unreleased]
+    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+{% endif %}\
+{% if version and previous %}\
+    {% if previous.commit_id %}
+        `{{ previous.commit_id | truncate(length=7, end="") }} <https://github.com/PyBama/pybama.org/commit/{{ previous.commit_id }}>`_ ... \
+        `{{ commit_id | truncate(length=7, end="") }} <https://github.com/PyBama/pybama.org/commit/{{ commit_id }}>`_ \
+        | `See diff for {{ version }} <https://github.com/PyBama/pybama.org/compare/{{ previous.commit_id }}...{{ commit_id }}>`_
+    {% endif %}\
+{% endif %}\
+{% for group, commits in commits | group_by(attribute="group") %}
+    {{ group | upper_first }}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    {% for commit in commits %}
+        * (`{{ commit.id | truncate(length=7, end="") }} <https://github.com/PyBama/pybama.org/commit/{{ commit.id }}>`_) {% if commit.breaking %}[**breaking**] {% endif %} - {{ commit.message | upper_first }} ({{ commit.author.name }})\
+          {% for footer in commit.footers -%}
+            , {{ footer.token }}{{ footer.separator }}{{ footer.value }}\
+          {% endfor %}\
+    {% endfor %}
+{% endfor %}\n
+"""
+trim = true
+footer = """
+Byte Bot Changelog
+"""
+#postprocessors = [{ pattern = "`", replace = "``" }]
+
+[tool.git-cliff.git]
+conventional_commits = true
+filter_unconventional = true
+split_commits = false
+commit_parsers = [
+    { message = "^feat", group = "Features" },
+    { message = "^fix", group = "Bug Fixes" },
+    { message = "^doc", group = "Documentation" },
+    { message = "^perf", group = "Performance" },
+    { message = "^refactor", group = "Refactor" },
+    { message = "^style", group = "Styling" },
+    { message = "^test", group = "Testing" },
+    { message = "^chore\\(release\\): prepare for", skip = true },
+    { message = "^chore", group = "Miscellaneous Tasks" },
+    { body = ".*security", group = "Security" },
+]
+commit_preprocessors = [
+    # Matches a single backtick that is not preceded by another backtick (negative lookbehind)
+    # and not followed by another backtick (negative lookahead).. but these aren't supported
+    # in git cliff regexes. So we have to do it in 3 steps:
+    # Step 1: Replace pairs of backticks with a placeholder (e.g., "DOUBLEBACKTICK")
+    { pattern = "``", replace = "DOUBLEBACKTICK" },
+    # Step 2: Replace single backticks with double backticks
+    { pattern = "`", replace = "``" },
+    # Step 3: Replace the placeholder back to double backticks
+    { pattern = "DOUBLEBACKTICK", replace = "``" },
+    # TODO: Fix Co-authored commits
+]
+protect_breaking_commits = false
+filter_commits = false
+tag_pattern = "v[0-9]*"
+skip_tags = "v0.1.0-beta.1"
+ignore_tags = ""
+topo_order = false
+sort_commits = "oldest"
+link_parsers = [
+    # TODO: Supposedly matches on #1234 but doesn't work?
+    { pattern = "\\(#(\\d+)\\)", href = "https://github.com/PyBama/pybama.org/issues/$1" },
+]

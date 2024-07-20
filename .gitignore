@@ -1,10 +1,6 @@
-# python generated files
-__pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
+# NOTE: Please do not add random things here that should be globally ignored instead of in the project's .gitignore
+# See: https://sebastiandedeyne.com/setting-up-a-global-gitignore-file
 
-# venv
+# project things
 .venv
+.ruff_cache
