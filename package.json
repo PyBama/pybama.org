@@ -1,40 +1,36 @@
 {
+  "name": "pybama",
+  "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
-    "dev": "vite",
-    "watch": "vite build --watch",
-    "build": "vite build"
+    "app-dev": "app run --debug --reload",
+    "next-dev": "./node_modules/.bin/next dev",
+    "dev": "concurrently \"npm run next-dev\" \"npm run app-dev\"",
+    "build": "./node_modules/.bin/next build",
+    "start": "./node_modules/.bin/next start",
+    "lint": "./node_modules/.bin/next lint"
   },
+  "browserslist": "defaults, not ie <= 11",
   "dependencies": {
-    "@headlessui/react": "^2.1.2",
-    "@heroicons/react": "^2.1.5",
-    "@radix-ui/react-slot": "^1.1.0",
-    "@types/react-dom": "^18.3.0",
-    "@types/react-router": "^5.1.20",
-    "@vitejs/plugin-react": "^4.3.1",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.1",
-    "feather-icons": "^4.29.1",
-    "htmx": "^0.0.2",
-    "lucide-react": "^0.412.0",
-    "react-helmet-async": "^2.0.5",
-    "react-router-dom": "^6.25.1",
-    "tailwind-merge": "^2.4.0",
-    "tailwindcss-animate": "^1.0.7"
+    "@headlessui/react": "^2.1.0",
+    "@headlessui/tailwindcss": "^0.2.0",
+    "@types/node": "^20.10.8",
+    "@types/react": "^18.2.47",
+    "@types/react-dom": "^18.2.18",
+    "autoprefixer": "^10.4.12",
+    "clsx": "^2.1.0",
+    "concurrently": "^8.2.2",
+    "next": "^14.0.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@tailwindcss/aspect-ratio": "^0.4.2",
-    "@tailwindcss/typography": "^0.5.10",
-    "@types/alpinejs": "^3.13.9",
-    "@types/feather-icons": "^4.29.4",
-    "@types/node": "^20.10.3",
-    "autoprefixer": "^10.4.19",
-    "litestar-vite-plugin": "^0.5.1",
-    "postcss": "^8.4.38",
-    "prettier": "^3.2.5",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.3",
-    "vite": "^5.0.6"
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.0.4",
+    "prettier": "^3.3.2",
+    "prettier-plugin-tailwindcss": "^0.6.5",
+    "sharp": "0.33.1"
   }
 }

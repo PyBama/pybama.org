@@ -1,7 +1,6 @@
 install:
 	@rye sync --force
-	@rye run app assets build
-	@rye run app assets install
+	@npm install
 
 lint:
 	@rye lint --fix
@@ -17,7 +16,13 @@ test:
 	@rye test
 
 run:
+	@npm run dev
+
+run-api:
 	@rye run app run --debug --reload
+
+run-frontend:
+	@npm run next-dev
 
 docs-serve:
 	@echo "not implemented"\

@@ -1,0 +1,2 @@
+litestar
+uvicorn[standard]==0.23.2
