@@ -1,9 +1,6 @@
 providers = ['python', 'node']
 
 [variables]
-    PIP_DISABLE_PIP_VERSION_CHECK = '1'
-
-[variables]
 LITESTAR_SKIP_NODEENV_INSTALL = 'true'
 NIXPACKS_PYTHON_VERSION = '3.12'
 NPM_CONFIG_FUND = 'false'
