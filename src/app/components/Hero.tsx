@@ -18,9 +18,9 @@ export function Hero() {
               a rotating location, and a variety of other events throughout the year.
             </p>
             <p>
-              If you're interested in Python, web development, data science, or any other Python-related topic, you're
-              in the right place. Join us at our next event to learn, network, and grow your Python skills, no matter
-              your experience level!
+              If you&apos;re interested in Python, web development, data science, or any other Python-related topic,
+              you&apos;re in the right place. Join us at our next event to learn, network, and grow your Python skills,
+              no matter your experience level!
             </p>
           </div>
           <Button href="#" className="mt-10 w-full sm:hidden">

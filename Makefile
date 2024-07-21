@@ -5,6 +5,7 @@ install:
 lint:
 	@rye lint --fix
 	@rye fmt
+	@npm run lint
 
 fmt:
 	@rye fmt
@@ -23,6 +24,9 @@ run-api:
 
 run-frontend:
 	@npm run next-dev
+
+build:
+	@npm run build
 
 docs-serve:
 	@echo "not implemented"\
