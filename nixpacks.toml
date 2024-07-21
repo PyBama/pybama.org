@@ -1,4 +1,14 @@
-providers = ['python']
+providers = ['python', 'node']
 
 [variables]
-    PIP_DISABLE_PIP_VERSION_CHECK = '1'
+LITESTAR_SKIP_NODEENV_INSTALL = 'true'
+NIXPACKS_PYTHON_VERSION = '3.12'
+NPM_CONFIG_FUND = 'false'
+NPM_CONFIG_UPDATE_NOTIFIER = 'false'
+PIP_DISABLE_PIP_VERSION_CHECK = '1'
+
+[phases.setup]
+nixPkgs = ['...']
+
+[start]
+cmd = '/opt/venv/bin/app run --host 0.0.0.0 --port $PORT'

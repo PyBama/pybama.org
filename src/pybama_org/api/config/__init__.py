@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from pybama_org.config import core
-from pybama_org.config.settings import BASE_DIR, DEFAULT_MODULE_NAME, Settings, get_settings
+from pybama_org.api.config import core
+from pybama_org.api.config.settings import BASE_DIR, DEFAULT_MODULE_NAME, Settings, get_settings
 
 __all__ = (
     "Settings",

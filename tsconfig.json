@@ -1,24 +1,28 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "module": "ES2020",
-    "moduleResolution": "bundler",
+    "target": "es6",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
     "strict": true,
-    "jsx": "preserve",
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "esModuleInterop": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "skipLibCheck": true,
-    "noEmit": true,
-    "composite": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "resources",
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "paths": {
-      "@/*": ["./*"]
-    },
-    "types": ["vite/client"]
+      "@/*": ["./src/app/*"]
+    }
   },
-  "include": ["**/*.d.ts", "resources/**/*.js", "resources/**/*.ts", "vite.config.ts"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["./node_modules"]
 }

@@ -9,7 +9,7 @@ license = "MIT"
 dependencies = [
     "litestar[structlog,jinja]>=2.9.1",
     "litestar-granian>=0.5.0",
-    "litestar-vite>=0.1.22",
+    "litestar-vite[nodeenv]>=0.2.0",
     "advanced-alchemy>=0.17.3",
     "python-dotenv>=1.0.1",
 ]
@@ -17,7 +17,7 @@ readme = "README.md"
 requires-python = ">= 3.12"
 
 [project.scripts]
-app = "pybama_org.__main__:run_cli"
+app = "pybama_org.api.__main__:run_cli"
 
 [project.urls]
 homepage = "https://www.pybama.org/"
@@ -34,8 +34,8 @@ allow-direct-references = true
 
 [tool.hatch.build]
 dev-mode-dirs = ["src/"]
-include = ["src/public/**/*"]
-packages = ["src/pybama_org"]
+include = ["./public/**/*"]
+packages = ["src/pybama_org/api"]
 
 [tool.ruff]
 line-length = 120
@@ -60,6 +60,7 @@ dev-dependencies = [
     "codespell>=2.3.0",
     "mypy>=1.11.0",
     "pre-commit>=3.7.1",
+    "copier>=9.3.1",
 ]
 
 [tool.codespell]

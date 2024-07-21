@@ -15,19 +15,22 @@ def create_app() -> Litestar:
     """Create ASGI application."""
     from litestar import Litestar
 
-    from pybama_org.config import core, routers
-    from pybama_org.config.settings import get_settings
+    from pybama_org.api.config import core, routers
+    from pybama_org.api.config.settings import get_settings
 
     settings = get_settings()
 
     return Litestar(
-        cors_config=core.cors_config,
-        debug=settings.app.DEBUG,
-        openapi_config=core.openapi_config,
+        # -- Core
         route_handlers=routers.route_handlers,
+        debug=settings.app.DEBUG,
+        # -- Configs
+        cors_config=core.cors_config,
+        openapi_config=core.openapi_config,
+        # -- Extras
         plugins=[
             core.structlog_plugin,
-            core.vite_plugin,
+            # core.vite_plugin,
             core.granian_plugin,
         ],
     )

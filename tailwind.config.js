@@ -1,60 +1,42 @@
-/** @type {import('tailwindcss').Config} */
-const defaultTheme = require("tailwindcss/defaultTheme")
+import headlessuiPlugin from "@headlessui/tailwindcss"
+import { type Config } from "tailwindcss"
 
-module.exports = {
-  darkMode: "class",
-  content: [
-    "{resources,templates}/**/*.{js,cjs,mjs,jsx,ts,tsx,vue,j2,html,htm,jinja,jinja2}",
-    "src/pybama_org/frontend/templates/**/*.{js,jsx,ts,cjs,mjs,tsx,vue,j2,html,htm,jinja,jinja2}",
-  ],
-  safelist: ["alert", "alert-success", "alert-error", "alert-warning", "alert-info"],
-  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/aspect-ratio"), require("daisyui")],
+export default {
+  content: ["./src/app/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
+    fontSize: {
+      xs: ["0.75rem", { lineHeight: "1rem" }],
+      sm: ["0.875rem", { lineHeight: "1.5rem" }],
+      base: ["1rem", { lineHeight: "1.5rem" }],
+      lg: ["1.125rem", { lineHeight: "2rem" }],
+      xl: ["1.25rem", { lineHeight: "2rem" }],
+      "2xl": ["1.5rem", { lineHeight: "2.5rem" }],
+      "3xl": ["2rem", { lineHeight: "2.5rem" }],
+      "4xl": ["2.5rem", { lineHeight: "3rem" }],
+      "5xl": ["3rem", { lineHeight: "3.5rem" }],
+      "6xl": ["4rem", { lineHeight: "1" }],
+      "7xl": ["5rem", { lineHeight: "1" }],
+      "8xl": ["6rem", { lineHeight: "1" }],
+      "9xl": ["8rem", { lineHeight: "1" }],
     },
     extend: {
       colors: {
-        "python-primary": "#4584b6",
-        "python-accent": "#ffde57",
-        "python-secondary": "#646464",
+        "primary": "#4584b6",
+        "secondary": "#ffde57",
+        "tertiary": "646464",
+      },
+      borderRadius: {
+        "4xl": "2rem",
+        "5xl": "2.5rem",
+      },
+      fontFamily: {
+        sans: "var(--font-inter)",
+        display: "var(--font-dm-sans)",
+      },
+      maxWidth: {
+        "2xl": "40rem",
       },
     },
   },
-  daisyui: {
-    darkTheme: "dark",
-    base: true,
-    styled: true,
-    utils: true,
-    themes: [
-      {
-        light: {
-          primary: "#4584b6",
-          secondary: "#646464",
-          accent: "#70b2e7",
-          neutral: "#e5e7eb",
-          "base-100": "#f3f4f6",
-          info: "#7dd3fc",
-          success: "#86efac",
-          warning: "#fcd34d",
-          error: "#f87171",
-        },
-        dark: {
-          primary: "#4584b6",
-          secondary: "#ebebe9",
-          accent: "#70b2e7",
-          neutral: "#202020",
-          "base-100": "#121212",
-          info: "#7dd3fc",
-          success: "#86efac",
-          warning: "#fcd34d",
-          error: "#f87171",
-        },
-      },
-    ],
-  },
-}
+  plugins: [headlessuiPlugin],
+} satisfies Config

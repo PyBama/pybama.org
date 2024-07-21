@@ -11,7 +11,10 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Final
 
 from advanced_alchemy.utils.text import slugify
+from litestar.contrib.jinja import JinjaTemplateEngine
 from litestar.utils.module_loader import module_to_os_path
+
+from pybama_org.api.__metadata__ import __project__, __version__
 
 if TYPE_CHECKING:
     from litestar.data_extractors import RequestExtractorField, ResponseExtractorField
@@ -57,12 +60,14 @@ class ViteSettings:
         default_factory=lambda: os.getenv("VITE_ENABLE_REACT_HELPERS", "True") in TRUE_VALUES,
     )
     """Enable React support in HMR."""
-    BUNDLE_DIR: Path = field(default_factory=lambda: Path(f"{BASE_DIR}/domain/web/public"))
+    BUNDLE_DIR: Path = field(default_factory=lambda: Path(f"{BASE_DIR}/components/frontend/public"))
     """Bundle directory"""
     RESOURCE_DIR: Path = field(default_factory=lambda: Path("resources"))
     """Resource directory"""
-    TEMPLATE_DIR: Path = field(default_factory=lambda: Path(f"{BASE_DIR}/domain/web/templates"))
+    TEMPLATE_DIR: Path = field(default_factory=lambda: Path(f"{BASE_DIR}/components/frontend/templates"))
     """Template directory."""
+    TEMPLATE_ENGINE: type[JinjaTemplateEngine] = JinjaTemplateEngine
+    """Template engine to use. (``Jinja2``, ``Mako``, or ``MiniJinja``)"""
     ASSET_URL: str = field(default_factory=lambda: os.getenv("ASSET_URL", "/static/"))
     """Base URL for assets"""
 
@@ -76,7 +81,7 @@ class ViteSettings:
 class ServerSettings:
     """Server configurations."""
 
-    APP_LOC: str = "pybama_org.app:app"
+    APP_LOC: str = "pybama_org.api.app:app"
     """Path to app executable, or factory."""
     APP_LOC_IS_FACTORY: bool = False
     """Indicate if APP_LOC points to an executable or factory."""
@@ -198,6 +203,56 @@ class AppSettings:
 
 
 @dataclass
+class OpenAPISettings:
+    """OpenAPI configuration."""
+
+    TITLE: str = "API for the PyBama web service"
+    """OpenAPI Title"""
+    VERSION: str = __version__
+    """OpenAPI Version"""
+    PATH: str = "/api"
+    """OpenAPI Path"""
+    CONTACT_NAME: str = "Jacob Coffee"
+    """OpenAPI Contact Name"""
+    CONTACT_EMAIL: str = "hello@pybama.org"
+    """OpenAPI Contact Email"""
+    DESCRIPTION: str | None = f"""This API provides a list of stores and their associated information based on the
+                                      OpenAPI 3.1 specification. You can find out more about this project in the
+                                      [docs]({os.getenv("APP_URL", "http://0.0.0.0/") + "docs"}).
+                                        This project is maintained by the [PyBama organization](https://github.com/PyBama)."""
+    SERVERS: list[dict[str, str]] = field(default_factory=list)
+    """Servers to use for the OpenAPI documentation."""
+    EXTERNAL_DOCS: dict[str, str] | None = field(
+        default_factory=lambda: {
+            "description": f"{__project__} Docs",
+            "url": os.getenv("APP_URL", "http://0.0.0.0/") + "/docs",
+        }
+    )
+
+    def __post_init__(self) -> None:
+        """This is called after the dataclass is initialized.
+
+        Check if the ``SERVERS`` is a :class:`str` or a :class:`list`.
+        """
+        self.assemble_openapi_servers()
+
+    def assemble_openapi_servers(self) -> None:
+        """Assemble OpenAPI servers based on environment."""
+        environment = os.getenv("APP_ENVIRONMENT") or "dev"
+        port = os.getenv("APP_PORT") or "8000"
+
+        if environment == "prod":
+            self.SERVERS = [
+                {
+                    "url": os.getenv("APP_URL", "https://www.pybama.org/api"),
+                    "description": "Production Server",
+                },
+            ]
+        elif environment == "dev":
+            self.SERVERS = [{"url": f"http://0.0.0.0:{port}/", "description": "Development Server"}]
+
+
+@dataclass
 class Settings:
     """Class to hold all settings."""
 
@@ -205,6 +260,7 @@ class Settings:
     vite: ViteSettings = field(default_factory=ViteSettings)
     server: ServerSettings = field(default_factory=ServerSettings)
     log: LogSettings = field(default_factory=LogSettings)
+    openapi: OpenAPISettings = field(default_factory=OpenAPISettings)
 
     @classmethod
     def from_env(cls, dotenv_filename: str = ".env") -> Settings:
