@@ -11,4 +11,4 @@ PIP_DISABLE_PIP_VERSION_CHECK = '1'
 nixPkgs = ['...']
 
 [start]
-cmd = 'app run --host 0.0.0.0 --port $PORT'
+cmd = '/opt/venv/bin/app run --host 0.0.0.0 --port $PORT'

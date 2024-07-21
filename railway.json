@@ -4,6 +4,6 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "app run --host 0.0.0.0 --port $PORT"
+    "startCommand": "/opt/venv/bin/app run --host 0.0.0.0 --port $PORT"
   }
 }
