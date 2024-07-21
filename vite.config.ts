@@ -21,7 +21,7 @@ export default defineConfig({
   plugins: [
     react(),
     litestar({
-      input: ["resources/styles.css", "resources/main.ts"],
+      input: ["resources/styles.css", "resources/main.tsx"],
       assetUrl: `${ASSET_URL}`,
       bundleDirectory: "public",
       resourceDirectory: "resources",

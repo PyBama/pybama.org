@@ -9,7 +9,7 @@ license = "MIT"
 dependencies = [
     "litestar[structlog,jinja]>=2.9.1",
     "litestar-granian>=0.5.0",
-    "litestar-vite>=0.1.22",
+    "litestar-vite[nodeenv]>=0.2.0",
     "advanced-alchemy>=0.17.3",
     "python-dotenv>=1.0.1",
 ]
@@ -60,6 +60,7 @@ dev-dependencies = [
     "codespell>=2.3.0",
     "mypy>=1.11.0",
     "pre-commit>=3.7.1",
+    "copier>=9.3.1",
 ]
 
 [tool.codespell]

@@ -7,15 +7,19 @@
     "build": "vite build"
   },
   "dependencies": {
+    "@headlessui/react": "^2.1.2",
+    "@heroicons/react": "^2.1.5",
     "@radix-ui/react-slot": "^1.1.0",
+    "@types/react-dom": "^18.3.0",
     "@types/react-router": "^5.1.20",
     "@vitejs/plugin-react": "^4.3.1",
-    "alpinejs": "^3.13.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "feather-icons": "^4.29.1",
     "htmx": "^0.0.2",
     "lucide-react": "^0.412.0",
+    "react-helmet-async": "^2.0.5",
+    "react-router-dom": "^6.25.1",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7"
   },
@@ -26,7 +30,6 @@
     "@types/feather-icons": "^4.29.4",
     "@types/node": "^20.10.3",
     "autoprefixer": "^10.4.19",
-    "daisyui": "^4.7.3",
     "litestar-vite-plugin": "^0.5.1",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",

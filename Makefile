@@ -17,7 +17,11 @@ test:
 	@rye test
 
 run:
-	@rye run app run --debug
+	@rye run app run --debug --reload
 
 docs-serve:
 	@echo "not implemented"\
+
+applet:
+	@echo "Generating new applet in 'src/pybama_org/components/'..."
+	@rye run copier copy gh:JacobCoffee/applet-template src/pybama_org/components/
